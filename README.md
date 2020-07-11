@@ -15,7 +15,7 @@ y la seguridad en WS con tickets y Redis
 ## Installation
  ```sh
 $ git clone https://github.com/danielGomez1703/secureBoard
-$ cd ARSW-Lab7
+$ cd secureBoard
 $ mvn package
 $ mvn spring-boot:run
 ```
