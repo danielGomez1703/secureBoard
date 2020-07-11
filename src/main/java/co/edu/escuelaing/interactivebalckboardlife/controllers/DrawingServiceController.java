@@ -5,6 +5,8 @@
  */
 package co.edu.escuelaing.interactivebalckboardlife.controllers;
 
+import co.edu.escuelaing.interactivebalckboardlife.repositories.TicketRepository;
+import javax.inject.Inject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,11 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DrawingServiceController {
     
+    @Inject  
+    TicketRepository tkRepo;
+    
     @GetMapping("/status")
     public String status() {
         return "{\"status\":\"Greetings from Spring Boot. " +
                 java.time.LocalDate.now() + ", " +
                 java.time.LocalTime.now() +
                 ". " + "The server is Runnig!\"}";
+    }
+    
+    @GetMapping("getticket")
+    public String getTicket(){
+        return "{\"ticket\":\""+
+                tkRepo.getTick() + "\"}";
     }
 }

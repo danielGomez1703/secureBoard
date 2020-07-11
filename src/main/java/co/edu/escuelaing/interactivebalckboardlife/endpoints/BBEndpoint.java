@@ -6,6 +6,8 @@
 package co.edu.escuelaing.interactivebalckboardlife.endpoints;
 
 
+import co.edu.escuelaing.interactivebalckboardlife.BBApplicationContextAware;
+import co.edu.escuelaing.interactivebalckboardlife.repositories.TicketRepository;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.Queue;
@@ -28,8 +30,14 @@ public class BBEndpoint {
     private static final Logger logger = Logger.getLogger(BBEndpoint.class.getName());
     /* Queue for all open WebSocket sessions */
     static Queue<Session> queue = new ConcurrentLinkedQueue<>();
-
+    
+    
     Session ownSession = null;
+    
+    private boolean accepted  = false;
+    TicketRepository tkRepo = 
+            (TicketRepository) BBApplicationContextAware.getApplicationContext().getBean("ticketRepository");
+    
 
     /* Call this method to send a message to all clients */
     public void send(String msg) {
@@ -48,10 +56,14 @@ public class BBEndpoint {
 
     @OnMessage
     public void processPoint(String message, Session session) {
-        logger.log(Level.INFO, "Point received:" + message + ". From session: " + session);
-        this.send(message);
+        if(accepted){
+            logger.log(Level.INFO, "Point received:" + message + ". From session: " + session);
+            this.send(message);
+        }if(!accepted && tkRepo.checkTicket(message)){
+            System.out.println("crea una conexion, es aceptado con el ticket " + message );
+            accepted = true;
+        }
     }
-
     @OnOpen
     public void openConnection(Session session) {
         /* Register this connection in the queue */

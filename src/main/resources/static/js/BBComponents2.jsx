@@ -17,8 +17,21 @@ class WSBBChannel {
         this.receivef = callback;
     }
 
-
     onOpen(evt) {
+        
+        fetch("/getticket", {
+            method: 'GET'
+        }).then(function (response) {
+            if (response.ok) {
+                console.log("obtener respuesta: " + response);
+                return response.json();
+            } else {
+                console.log("se genera un errror");
+            }
+        }).then( (answerServ) => {
+            console.log(answerServ.ticket);
+            this.wsocket.send(answerServ.ticket);
+        });
         console.log("In onOpen", evt);
     }
     onMessage(evt) {
@@ -40,7 +53,6 @@ class WSBBChannel {
         this.wsocket.send(msg);
     }
 
-
 }
 
 
@@ -51,7 +63,7 @@ class BBCanvas extends React.Component {
                 new WSBBChannel(BBServiceURL(),
                         (msg) => {
                     var obj = JSON.parse(msg);
-                   // console.log("On func call back ", msg);
+                    // console.log("On func call back ", msg);
                     this.drawPoint(obj.x, obj.y);
                 });
         this.myp5 = null;
@@ -76,7 +88,7 @@ class BBCanvas extends React.Component {
             };
         }
     }
-    
+
     drawPoint(x, y) {
         this.myp5.ellipse(x, y, 20, 20);
     }
