@@ -28,7 +28,8 @@ $ mvn spring-boot:run
   
 
   puede acceder a la aplicacion por el siguiente link:
-[link Despliegue Heroku Del Tablero Dinamico](https://floating-citadel-07870.herokuapp.com/bb2.html)
+
+[link Despliegue Heroku Del Tablero Dinamico](http://securetable.herokuapp.com/bb2.html)
 
 # PRUEBAS
 
@@ -41,8 +42,8 @@ Las siguientes imagenes son las evidencias de la aplicacion de un Tablero Dinami
 
 
 Se requiere una validacion de usuario para poder acceder a la aplicacion
-    credenciales: usuario,usuario2
-    password: password,password2
+    - credenciales: usuario,usuario2
+    - password: password,password2
 
 ![Modelo](https://github.com/danielGomez1703/secureBoard/blob/master/resources/con1.PNG)
 
